@@ -1,1 +1,22 @@
-# Trollo     
+## Trollo     
+
+# Breve Descrição do Projeto:
+
+O Trollo será uma ferramenta visual para gerenciamento de projetos. 
+Essa ferramenta irá conter colunas organizadas em listas, onde poderão ser criadas tarefas ("cards") com título e descrição, possibilitando a organização de tarefas e atividades.
+
+# Funcionalidades do Projeto:
+
+Usuário deverá ser capaz de adicionar e editar colunas e tarefas em forma de "cards". Elas serão exibidas em uma tela inicial em formato de lista.
+
+Funcionalidades iniciais incluem: adicionar novas colunas e tarefas, editar título e texto, mover tarefas entre colunas, além da opção de excluir ambas.
+
+Haverá também uma funcionalidade para alterar a cor (sólida) do background.
+
+Funcionalidades a serem incorporadas futuramente: adicionar novos membros que poderão editar conteúdo, será possivel exportar projeto em PDF, transferir colunas e tarefas entre projetos e salvar informações automaticamente (ex: Google Docs).
+
+# Tecnologias Utilizadas:
+
+Ferramente funcionata em página web, elaborada em linguagem Javascript/CSS/HTML com inspiração e funções semelhantes ao TRELLO.COM.BR.
+
+Será utilizado também o próprio Trello para organização do projeto e controle de Backlog, além do FIGMA para prototipagem.
