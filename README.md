@@ -1,3 +1,2 @@
 # Trollo
 
-DEscrição da ferramenta:
