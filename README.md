@@ -5,6 +5,8 @@
 O Trollo será uma ferramenta visual para gerenciamento de projetos. 
 Essa ferramenta irá conter colunas organizadas em listas, onde poderão ser criadas tarefas ("cards") com título e descrição, possibilitando a organização de tarefas e atividades.
 
+Ferramenta utilizada para criar um desenvolvimento agil em equipe.
+
 ## ***Funcionalidades do Projeto:***
 
 Usuário deverá ser capaz de adicionar e editar colunas e tarefas em forma de "cards". Elas serão exibidas em uma tela inicial em formato de lista.
