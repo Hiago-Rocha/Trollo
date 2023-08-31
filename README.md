@@ -1,4 +1,4 @@
-## Trollo     
+## Trollo 
 
 # Breve Descrição do Projeto:
 
@@ -13,10 +13,10 @@ Funcionalidades iniciais incluem: adicionar novas colunas e tarefas, editar tít
 
 Haverá também uma funcionalidade para alterar a cor (sólida) do background.
 
-Funcionalidades a serem incorporadas futuramente: adicionar novos membros que poderão editar conteúdo, será possivel exportar projeto em PDF, transferir colunas e tarefas entre projetos e salvar informações automaticamente (ex: Google Docs).
+Funcionalidades a serem incorporadas futuramente: adicionar novos membros que poderão editar conteúdo, será possível exportar projeto em PDF, transferir colunas e tarefas entre projetos e salvar informações automaticamente (ex: Google Docs).
 
 # Tecnologias Utilizadas:
 
-Ferramente funcionata em página web, elaborada em linguagem Javascript/CSS/HTML com inspiração e funções semelhantes ao TRELLO.COM.BR.
+Ferramenta funcionará em página web, elaborada em linguagens de programação e marcação Javascript/CSS/HTML com inspiração e funções semelhantes ao TRELLO.COM.BR.
 
-Será utilizado também o próprio Trello para organização do projeto e controle de Backlog, além do FIGMA para prototipagem.
+Será utilizado também o próprio Trello para organização do projeto e controle de Backlog, além do FIGMA para prototipagem.
