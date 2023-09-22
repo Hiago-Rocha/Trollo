@@ -7,8 +7,22 @@ function abrirMenu(){
     };
 };
 
-function mudarCor(cor){
+function mudarCor(corFundo){
+    let h1 = document.getElementById("trolloh1");
     let fundo = document.getElementById("fundo");
-    fundo.style.backgroundColor = cor;
-    fundo.style.h1 = cor;
+    fundo.style.backgroundColor = corFundo;
+    h1.style.color = corFundo;
+    salvarCor(corFundo);
+}
+
+function salvarCor(corFundo){
+    localStorage.setItem("corSalva", corFundo);
+}
+
+window.onload = function carregarCor(){
+    let corRecuperada = localStorage.getItem('corSalva')
+    let h1 = document.getElementById("trolloh1");
+    let fundo = document.getElementById("fundo");
+    fundo.style.backgroundColor = corRecuperada;
+    h1.style.color = corRecuperada;
 }
