@@ -1,0 +1,62 @@
+.menu{
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    width: 100%;
+    background-color: purple;
+}
+.menu div{
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
+}
+.menu div h1{
+    font-size: 40px;
+    color: white;
+}
+.menu img{
+    height: 70px;
+    width: 70px;
+    margin: 16px;
+}
+
+#corFundoID{
+    display: none;
+}
+.corFundo{
+    background-color: white;
+    position: absolute;
+    right: 16px;
+    top: 105px;
+    display: flex;
+    flex-direction: column;
+    height: 260px;
+    width: 60px;
+    border-radius: 10px;
+}
+.corFundo div{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin-left: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#cor1{
+    background-color: green;
+}
+#cor2{
+    background-color: blue;
+}
+#cor3{
+    background-color: gray;
+}
+#cor4{
+    background-color: brown;
+}
+#cor5{
+    background-color: yellow;
+}
+#cor6{
+    background-color: red;
+}

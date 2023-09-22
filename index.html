@@ -1,11 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="PT-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./src/style/reset.css">
+    <link rel="stylesheet" href="./src/style/style.css">
+    <title>Trollo</title>
 </head>
-<body>
-    
+<body id="fundo">
+    <nav class="menu">
+        <div>
+            <h1>Trollo</h1>
+        </div>
+        <img src="./src/img/icons8-color-circle-96 (1).png" alt="" onclick="abrirMenu()">
+    </nav>
+    <div class="corFundo" id="corFundoID">
+        <div id="cor1" onclick="mudarCor(`green`)"></div>
+        <div id="cor2" onclick="mudarCor(`blue`)"></div>
+        <div id="cor3" onclick="mudarCor(`gray`)"></div>
+        <div id="cor4" onclick="mudarCor(`brown`)"></div>
+        <div id="cor5" onclick="mudarCor(`yellow`)"></div>
+        <div id="cor6" onclick="mudarCor(`red`)"></div>
+    </div>
+    <script src="./src/script/script.js"></script>
 </body>
 </html>
