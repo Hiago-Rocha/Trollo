@@ -10,4 +10,5 @@ function abrirMenu(){
 function mudarCor(cor){
     let fundo = document.getElementById("fundo");
     fundo.style.backgroundColor = cor;
+    fundo.style.h1 = cor;
 }
