@@ -1,7 +1,7 @@
 .menu{
     display: flex;
     justify-content: space-between;
-    height: 150px;
+    height: 100px;
     width: 100%;
     background-color: black;
 }
@@ -29,8 +29,8 @@
 }
 
 .menu img{
-    height: 52px;
-    width: 52px;
+    height: 42px;
+    width: 42px;
     margin: 26px;
     margin-top: 50px;
 }
