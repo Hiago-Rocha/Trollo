@@ -39,6 +39,7 @@
     display: none;
 }
 .corFundo{
+    box-shadow: 7px 7px 5px rgba(34, 33, 33, 0.5);
     background-color: white;
     position: absolute;
     right: 26px;
