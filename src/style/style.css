@@ -106,8 +106,8 @@
 /* conteudo da main */
 
 .container{
-    margin-left: 3%;
-    margin-right: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
     display: flex;
 }
 
@@ -131,4 +131,19 @@
     height: 20%;
     align-items: center;
     border-radius: 5px;
+}
+.buttonColumn{
+    font-size: 28px;
+    color: white;
+    margin-top: 4%;
+    height: 30px;
+    width: 200px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: black;
+    cursor: pointer;
+}
+.buttonColumn:hover{
+    font-size: 30px;
+    height: 32px;
 }

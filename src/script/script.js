@@ -26,3 +26,29 @@ window.onload = function carregarCor(){
     fundo.style.backgroundColor = corRecuperada;
     h1.style.color = corRecuperada;
 }
+
+function createColumn(){
+    const ancora = document.getElementById("columnsID");
+    const divDropArea = document.createElement("div");
+    const inputTitle = document.createElement("input");
+    const form = document.createElement("form");
+    const pButton = document.createElement("p");
+    const imgLixo = document.createElement("img");
+    
+
+    divDropArea.classList.add(`dropArea`);
+    divDropArea.id = `-${Date.now()}`
+    inputTitle.classList.add("title-coluna");
+    form.classList.add("form");
+    pButton.classList.add("button+");
+    inputTitle.setAttribute("placeholder", "Título");
+    inputTitle.setAttribute("maxlength", "15");
+
+    ancora.appendChild(divDropArea);
+    divDropArea.appendChild(inputTitle);
+    divDropArea.appendChild(form);
+    divDropArea.appendChild(pButton);
+    divDropArea.appendChild(imgLixo);
+
+
+}
