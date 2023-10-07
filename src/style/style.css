@@ -105,19 +105,25 @@
 
 /* conteudo da main */
 
+#buttonAddColumn{
+    display: block;
+}
+
 .container{
     margin-left: 5%;
     margin-right: 5%;
     display: flex;
 }
-
+.columns{
+    display: flex;
+}
 .dropArea{
     display: flex;
     flex-direction: column;
     border: solid;
     border-color: black;
     border-radius: 4.6%;
-    max-width: 15%;
+    max-width: 200px;
     min-height: 280px;
     margin: 1.8%;
 }
