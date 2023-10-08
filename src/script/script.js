@@ -26,43 +26,51 @@ window.onload = function carregarCor(){
     fundo.style.backgroundColor = corRecuperada;
     h1.style.color = corRecuperada;
 }
-let contador = 0;
+let counter = 0;
 function createColumn(){
-    if(contador<5){
-        contador++
+    if(counter < 5){
         const ancora = document.getElementById("columnsID");
-        const divDropArea = document.createElement("div");
-        const inputTitle = document.createElement("input");
+        const dropAreaDiv = document.createElement("div");
+        const columnTitleInput = document.createElement("input");
         const form = document.createElement("form");
-        const pButton = document.createElement("p");
+        const tasksButton = document.createElement("p");
         const imgLixo = document.createElement("img");
         const divImg = document.createElement("div");
-    
-
-        divDropArea.classList.add(`dropArea`);
-        divDropArea.id = `-${Date.now()}`
-        inputTitle.classList.add("title-coluna");
+        
+        
+        dropAreaDiv.classList.add("dropArea");
+        dropAreaDiv.id = `-${Date.now()}`
+        columnTitleInput.classList.add("columnTitle");
         form.classList.add("form");
-        pButton.classList.add("button+");
-        pButton.innerText = "+";
-        pButton.addEventListener("click", addForms());
-        inputTitle.setAttribute("placeholder", "Título");
-        inputTitle.setAttribute("maxlength", "15");
+        tasksButton.classList.add("tasksButton");
+        tasksButton.innerText = "+";
+        tasksButton.addEventListener("click", createTasks());
+        columnTitleInput.setAttribute("placeholder", "Título");
+        columnTitleInput.setAttribute("maxlength", "15");
         imgLixo.src = "./src/img/trash-icon.png";
+        
+        ancora.appendChild(dropAreaDiv);
+        dropAreaDiv.appendChild(columnTitleInput);
+        dropAreaDiv.appendChild(form);
+        dropAreaDiv.appendChild(tasksButton);
+        dropAreaDiv.appendChild(imgLixo);
+        
+        counter++;
 
-        ancora.appendChild(divDropArea);
-        divDropArea.appendChild(inputTitle);
-        divDropArea.appendChild(form);
-        divDropArea.appendChild(pButton);
-        divDropArea.appendChild(imgLixo);
-
-        if(contador== 5){
-            let escode = document.getElementById("buttonAddColumn");
+        if(counter == 5){
+            let escode = document.getElementById("columnButton");
             escode.style.display = "none";
         }
     }
 }
 
-function addForms(){
-    
+function createTasks(){
+    const tasksDiv = document.createElement("div");
+    const tasksTitleInput = document.createElement("input");
+    const tasksForm = document.createElement("form");
+
+    tasksDiv.classList.add("tasksDiv");
+    tasksDiv.id = `-${Date.now()}`
+    tasksTitleInput.classList.add("tasksTitle");
+    tasksForm.classList.add("tasksForm");
 }
