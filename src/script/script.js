@@ -26,46 +26,102 @@ window.onload = function carregarCor() {
     fundo.style.backgroundColor = corRecuperada;
     h1.style.color = corRecuperada;
 }
-let arrayColumnID = [];
+
 let columnCounter = 0;
+let arrColumns = [];
+let arrTasks = [];
+
 function createColumn() {
     if (columnCounter < 5) {
         const ancora = document.getElementById("columnsID");
         const dropAreaDiv = document.createElement("div");
-        const columnTitleInput = document.createElement("input");
+        const taskArea = document.createElement("div");
+        const columnTitleArea = document.createElement("textarea");
         const tasksButton = document.createElement("button");
-        const deleteColumn = document.createElement("button");
         const divImg = document.createElement("div");
         const imgLixo = document.createElement("img");
 
-        dropAreaDiv.classList.add("dropArea");
-        generateID =`-${Date.now()}`;
-        arrayColumnID.push(generateID);
-        dropAreaDiv.id = generateID;
-        tasksButton.id = columnCounter;
-        columnTitleInput.classList.add("columnTitle");
-        tasksButton.classList.add("tasksButton");
-        tasksButton.innerText = "+";
-        let buttonID = tasksButton.id;
-        tasksButton.addEventListener("click", function(){
-            createTasks(arrayColumnID, tasksButton, buttonID);
-        });
-        columnTitleInput.setAttribute("placeholder", "Título");
-        columnTitleInput.setAttribute("maxlength", "15");
+        let areaTaskGenerateID = `-${Date.now()}`;
+        let dropGenerateID =`${Date.now()}`;
+        taskArea.id = areaTaskGenerateID;
+        dropAreaDiv.id = dropGenerateID;
 
+
+        columnTitleArea.setAttribute("placeholder", "Título");
+        columnTitleArea.setAttribute("maxlength", "15");
+        /*columnTitleArea.addEventListener("keyup", function(){
+            let key = e.which || e.keyCode;
+            if (key == 13){
+                //saveTitle(columnTitleArea.value);
+                console.log(columnTitleArea.value);
+            }
+        })*/
+
+        tasksButton.innerText = "Save";
         imgLixo.src = "./src/img/trash-icon.png";
-        deleteColumn.appendChild(imgLixo);
-        deleteColumn.classList.add("deleteColumn");
-        deleteColumn.addEventListener("click", function(){
-            columnDelete(arrayColumnID, buttonID);
-        })
+
+        dropAreaDiv.classList.add("dropArea");
+        columnTitleArea.classList.add("columnTitle");
+        tasksButton.classList.add("tasksButton");
+        divImg.classList.add("deleteColumn");
+
+        const tasksDiv = document.createElement("div");
+        const tasksTitleInput = document.createElement("input");
+        const tasksTextarea = document.createElement("textarea");
+        const imgLixoTask = document.createElement("img");
+
+        tasksTitleInput.id = `i${Date.now()}`
+        tasksTextarea.id = `a${Date.now()}`
+
+        tasksDiv.classList.add("tasksDiv");
+        tasksTitleInput.classList.add("tasksTitle");
+        tasksTextarea.classList.add("tasksDescription");
+
+        tasksTitleInput.setAttribute("placeholder", "Título");
+        tasksTitleInput.setAttribute("maxlength", "15");
+        tasksTextarea.setAttribute("placeholder", "Descrição");
+
+        imgLixoTask.src = "./src/img/trash-icon.png";
+
+        tasksDiv.appendChild(tasksTitleInput);
+        tasksDiv.appendChild(tasksTextarea);
 
         ancora.appendChild(dropAreaDiv);
-        dropAreaDiv.appendChild(columnTitleInput);
+        dropAreaDiv.appendChild(columnTitleArea);
+        dropAreaDiv.appendChild(taskArea);
+        dropAreaDiv.appendChild(tasksDiv);
         dropAreaDiv.appendChild(tasksButton);
-        dropAreaDiv.appendChild(deleteColumn);
         dropAreaDiv.appendChild(divImg);
-        console.log(arrayColumnID)
+        divImg.appendChild(imgLixo);
+
+        tasksButton.addEventListener("click", ()=>{
+            let task = {
+                id: taskArea.id,
+                columnID: dropAreaDiv.id,
+                title: tasksTitleInput.value,
+                text: tasksTextarea.value
+            }
+            createTasks(task, tasksTitleInput.id, tasksTextarea.id);
+        });
+
+        divImg.addEventListener("click", ()=> {
+            for(let i=0;i<arrColumns.length;i++){
+                if(arrColumns[i] == dropAreaDiv.id){
+                    arrColumns.splice(i,1);
+                    localStorage.removeItem("columnsID");
+                    const json = JSON.stringify(arrColumns);
+                    localStorage.setItem("columnsID", json);
+                }
+            }
+            dropAreaDiv.remove();
+            columnCounter--
+            if(columnCounter < 5){
+                let esconde = document.getElementById("columnButton");
+                esconde.style.display = "block";
+            }
+        })
+
+        saveColumns(dropAreaDiv.id);
     }
     columnCounter++;
 
@@ -75,51 +131,163 @@ function createColumn() {
     }
 }
 
-let counterTask = 0;
-let arrayTaskID = [];
-function createTasks(arrayColumnID, tasksButton, buttonID) {
-    console.log(arrayColumnID)
+
+function createTasks(task, id1, id2) {
+    const taskArea = document.getElementById(task.id);
+    const tasksDiv = document.createElement("div");
+    const titleH2 = document.createElement("h2");
+    const textP = document.createElement("p");
+    const imgLixo = document.createElement("img")
+
+    tasksDiv.id = `+${Date.now()}`;
+    titleH2.innerText = task.title;
+    textP.innerText = task.text;
+    imgLixo.src = "./src/img/trash-icon.png";
+
+    imgLixo.addEventListener("click", ()=>{
+        taskDelete(tasksDiv.id, task);
+    })
+
+    tasksDiv.classList.add("tasksDiv");
+    titleH2.classList.add("tasksTitle");
+    textP.classList.add("tasksDescription");
+
+    taskArea.appendChild(tasksDiv);
+    tasksDiv.appendChild(titleH2);
+    tasksDiv.appendChild(textP);
+    tasksDiv.appendChild(imgLixo);
+
+    const limpa1 = document.getElementById(id1).value = "";
+    const limpa2 = document.getElementById(id2).value = "";
+
+    saveTask(task);
+}
+
+
+function taskDelete(tasksDivID, task){
+    for(let i=0;i<arrTasks.length;i++){
+        if(arrTasks[i].id == task.id){
+            arrTasks.splice(i,1);
+            localStorage.removeItem("tasksSave");
+            const json = JSON.stringify(arrTasks);
+            localStorage.setItem("tasksSave", json);
+        }
+    }
+    let tasksDiv = document.getElementById(tasksDivID).remove();
+}
+
+function saveTask(task){
+    arrTasks.push(task);
+    const json = JSON.stringify(arrTasks);
+    localStorage.setItem("tasksSave", json);
+}
+
+function saveColumns(id){
+    arrColumns.push(id)
+    const json = JSON.stringify(arrColumns);
+    localStorage.setItem("columnsID", json);
+}
+
+function MontaTaskSave(){
+    let column = localStorage.getItem('columnsID');
+    let tasks = localStorage.getItem('tasksSave');
+    let arrColumnsRecuperado = JSON.parse(column);
+    let arrTasksRecuperado = JSON.parse(tasks);
+    columnCounter = arrColumnsRecuperado.length;
+    if(columnCounter == 5){
+        let esconde = document.getElementById("columnButton");
+        esconde.style.display = "none";
+    }
+
+    for(let i=0;i<arrColumnsRecuperado.length;i++){
+        arrColumns.push(arrColumnsRecuperado[i]);
+    }
+
+    for(let i=0;i<arrColumnsRecuperado.length;i++){
+        montaColumn(arrColumnsRecuperado[i], arrTasksRecuperado);
+    }
+}
+
+function montaColumn(columnID, arrTasksRecuperado){
+    const ancora = document.getElementById("columnsID");
+    const dropAreaDiv = document.createElement("div");
+    const taskArea = document.createElement("div");
+    const columnTitleArea = document.createElement("textarea");
+    const tasksButton = document.createElement("button");
+    const divImg = document.createElement("div");
+    const imgLixo = document.createElement("img");
+
+    dropAreaDiv.id = columnID;
+    
+    tasksButton.innerText = "Save";
+    imgLixo.src = "./src/img/trash-icon.png";
+
+    dropAreaDiv.classList.add("dropArea");
+    columnTitleArea.classList.add("columnTitle");
+    tasksButton.classList.add("tasksButton");
+    divImg.classList.add("deleteColumn");
+
     const tasksDiv = document.createElement("div");
     const tasksTitleInput = document.createElement("input");
     const tasksTextarea = document.createElement("textarea");
-    const imgLixo = document.createElement("img");
+    const imgLixoTask = document.createElement("img");
 
+    tasksTitleInput.id = `i${Date.now()}`
+    tasksTextarea.id = `a${Date.now()}`
 
-    imgLixo.src = "./src/img/trash-icon.png";
     tasksDiv.classList.add("tasksDiv");
-    tasksDiv.id = `-${Date.now()}`
-    arrayTaskID.push(tasksDiv.id);
     tasksTitleInput.classList.add("tasksTitle");
+    tasksTextarea.classList.add("tasksDescription");
+
     tasksTitleInput.setAttribute("placeholder", "Título");
     tasksTitleInput.setAttribute("maxlength", "15");
-    tasksTextarea.classList.add("tasksDescription");
     tasksTextarea.setAttribute("placeholder", "Descrição");
-    imgLixo.id = counterTask;
+
+    imgLixoTask.src = "./src/img/trash-icon.png";
 
     tasksDiv.appendChild(tasksTitleInput);
     tasksDiv.appendChild(tasksTextarea);
-    tasksDiv.appendChild(imgLixo);
 
-    const column = document.getElementById(arrayColumnID[buttonID]);
-    column.appendChild(tasksDiv);
+    ancora.appendChild(dropAreaDiv);
+    dropAreaDiv.appendChild(columnTitleArea);
+    dropAreaDiv.appendChild(taskArea);
+    dropAreaDiv.appendChild(tasksDiv);
+    dropAreaDiv.appendChild(tasksButton);
+    dropAreaDiv.appendChild(divImg);
+    divImg.appendChild(imgLixo);
 
-    column.insertBefore(tasksDiv, tasksButton);
-    imgLixo.addEventListener("click", function(){
-        let imgLixoID = imgLixo.id;
-        taskDelete(arrayTaskID, imgLixoID);
-    })
-    counterTask++
-}
+    tasksButton.addEventListener("click", ()=>{
+        let task = {
+            id: taskArea.id,
+            columnID: dropAreaDiv.id,
+            title: tasksTitleInput.value,
+            text: tasksTextarea.value
+         }
+            createTasks(task, tasksTitleInput.id, tasksTextarea.id);
+        });
 
-function taskDelete(arrayTaskID, imgLixoID){
-    let tasksDiv = document.getElementById(arrayTaskID[imgLixoID]).remove();
-}
+        divImg.addEventListener("click", ()=> {
+            for(let i=0;i<arrColumns.length;i++){
+                if(arrColumns[i] == dropAreaDiv.id){
+                    arrColumns.splice(i,1);
+                    localStorage.removeItem("columnsID");
+                    const json = JSON.stringify(arrColumns);
+                    localStorage.setItem("columnsID", json);
+                }
+            }
+            dropAreaDiv.remove();
+            columnCounter--
+            if(columnCounter < 5){
+                let esconde = document.getElementById("columnButton");
+                esconde.style.display = "block";
+            }
+        })
 
-function columnDelete(arrayColumnID, buttonID){
-    let columnDiv = document.getElementById(arrayColumnID[buttonID]).remove();
-    arrayColumnID.splice(buttonID);
-    if(columnCounter < 5){
-        let esconde = document.getElementById("columnButton");
-        esconde.style.display = "block";
+    for(let i=0;i<arrTasksRecuperado;i++){
+        
     }
 }
+
+
+
+MontaTaskSave()
