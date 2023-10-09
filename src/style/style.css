@@ -123,6 +123,7 @@
     border-radius: 4.6%;
     max-width: 200px;
     min-height: 400px;
+    max-height: 600px;
     margin: 1.8%;
     box-shadow: 4px 4px 5px rgba(34, 33, 33, 0.5);
 }
@@ -190,7 +191,9 @@
 }
 
 .tasksDiv{
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 2%;
     width: 94%;
     height: 100%;
@@ -199,6 +202,11 @@
     text-align: center;
     height: 80px;
     font-size: 30px;
+}
+.tasksDiv img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
 .tasksTitle{

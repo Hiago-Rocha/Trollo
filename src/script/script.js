@@ -26,9 +26,10 @@ window.onload = function carregarCor() {
     fundo.style.backgroundColor = corRecuperada;
     h1.style.color = corRecuperada;
 }
-let counter = 0;
+let arrayColumnID = [];
+let columnCounter = 0;
 function createColumn() {
-    if (counter < 5) {
+    if (columnCounter < 5) {
         const ancora = document.getElementById("columnsID");
         const dropAreaDiv = document.createElement("div");
         const columnTitleInput = document.createElement("input");
@@ -38,13 +39,16 @@ function createColumn() {
         const imgLixo = document.createElement("img");
 
         dropAreaDiv.classList.add("dropArea");
-        generateID = `-${Date.now()}`;
+        generateID =`-${Date.now()}`;
+        arrayColumnID.push(generateID);
         dropAreaDiv.id = generateID;
+        tasksButton.id = columnCounter;
         columnTitleInput.classList.add("columnTitle");
         tasksButton.classList.add("tasksButton");
         tasksButton.innerText = "+";
+        let buttonID = tasksButton.id;
         tasksButton.addEventListener("click", function(){
-            createTasks(generateID, tasksButton);
+            createTasks(arrayColumnID, tasksButton, buttonID);
         });
         columnTitleInput.setAttribute("placeholder", "Título");
         columnTitleInput.setAttribute("maxlength", "15");
@@ -52,39 +56,70 @@ function createColumn() {
         imgLixo.src = "./src/img/trash-icon.png";
         deleteColumn.appendChild(imgLixo);
         deleteColumn.classList.add("deleteColumn");
+        deleteColumn.addEventListener("click", function(){
+            columnDelete(arrayColumnID, buttonID);
+        })
 
         ancora.appendChild(dropAreaDiv);
         dropAreaDiv.appendChild(columnTitleInput);
         dropAreaDiv.appendChild(tasksButton);
         dropAreaDiv.appendChild(deleteColumn);
         dropAreaDiv.appendChild(divImg);
+        console.log(arrayColumnID)
     }
-    counter++;
+    columnCounter++;
 
-    if (counter == 5) {
+    if (columnCounter == 5) {
         let esconde = document.getElementById("columnButton");
         esconde.style.display = "none";
     }
 }
 
-function createTasks(generateID, tasksButton) {
+let counterTask = 0;
+let arrayTaskID = [];
+function createTasks(arrayColumnID, tasksButton, buttonID) {
+    console.log(arrayColumnID)
     const tasksDiv = document.createElement("div");
     const tasksTitleInput = document.createElement("input");
     const tasksTextarea = document.createElement("textarea");
+    const imgLixo = document.createElement("img");
 
+
+    imgLixo.src = "./src/img/trash-icon.png";
     tasksDiv.classList.add("tasksDiv");
     tasksDiv.id = `-${Date.now()}`
+    arrayTaskID.push(tasksDiv.id);
     tasksTitleInput.classList.add("tasksTitle");
     tasksTitleInput.setAttribute("placeholder", "Título");
     tasksTitleInput.setAttribute("maxlength", "15");
     tasksTextarea.classList.add("tasksDescription");
     tasksTextarea.setAttribute("placeholder", "Descrição");
+    imgLixo.id = counterTask;
 
     tasksDiv.appendChild(tasksTitleInput);
     tasksDiv.appendChild(tasksTextarea);
+    tasksDiv.appendChild(imgLixo);
 
-    const column = document.getElementById(generateID);
+    const column = document.getElementById(arrayColumnID[buttonID]);
     column.appendChild(tasksDiv);
 
     column.insertBefore(tasksDiv, tasksButton);
+    imgLixo.addEventListener("click", function(){
+        let imgLixoID = imgLixo.id;
+        taskDelete(arrayTaskID, imgLixoID);
+    })
+    counterTask++
+}
+
+function taskDelete(arrayTaskID, imgLixoID){
+    let tasksDiv = document.getElementById(arrayTaskID[imgLixoID]).remove();
+}
+
+function columnDelete(arrayColumnID, buttonID){
+    let columnDiv = document.getElementById(arrayColumnID[buttonID]).remove();
+    arrayColumnID.splice(buttonID);
+    if(columnCounter < 5){
+        let esconde = document.getElementById("columnButton");
+        esconde.style.display = "block";
+    }
 }
