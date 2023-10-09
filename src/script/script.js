@@ -1,13 +1,13 @@
-function abrirMenu(){
+function abrirMenu() {
     let ligar = document.getElementById("corFundoID");
-    if(ligar.style.display === "none"){
+    if (ligar.style.display === "none") {
         ligar.style.display = "block";
-    }else{
+    } else {
         ligar.style.display = "none";
     };
 };
 
-function mudarCor(corFundo){
+function mudarCor(corFundo) {
     let h1 = document.getElementById("trolloh1");
     let fundo = document.getElementById("fundo");
     fundo.style.backgroundColor = corFundo;
@@ -15,11 +15,11 @@ function mudarCor(corFundo){
     salvarCor(corFundo);
 }
 
-function salvarCor(corFundo){
+function salvarCor(corFundo) {
     localStorage.setItem("corSalva", corFundo);
 }
 
-window.onload = function carregarCor(){
+window.onload = function carregarCor() {
     let corRecuperada = localStorage.getItem('corSalva')
     let h1 = document.getElementById("trolloh1");
     let fundo = document.getElementById("fundo");
@@ -27,50 +27,64 @@ window.onload = function carregarCor(){
     h1.style.color = corRecuperada;
 }
 let counter = 0;
-function createColumn(){
-    if(counter < 5){
+function createColumn() {
+    if (counter < 5) {
         const ancora = document.getElementById("columnsID");
         const dropAreaDiv = document.createElement("div");
         const columnTitleInput = document.createElement("input");
-        const form = document.createElement("form");
-        const tasksButton = document.createElement("p");
-        const imgLixo = document.createElement("img");
+        const tasksButton = document.createElement("button");
+        const deleteColumn = document.createElement("button");
         const divImg = document.createElement("div");
-        
-        
+        const imgLixo = document.createElement("img");
+
         dropAreaDiv.classList.add("dropArea");
-        dropAreaDiv.id = `-${Date.now()}`
+        generateID = `-${Date.now()}`;
+        dropAreaDiv.id = generateID;
         columnTitleInput.classList.add("columnTitle");
-        form.classList.add("form");
         tasksButton.classList.add("tasksButton");
         tasksButton.innerText = "+";
-        tasksButton.addEventListener("click", createTasks());
+        tasksButton.addEventListener("click", function(){
+            createTasks(generateID, tasksButton);
+        });
         columnTitleInput.setAttribute("placeholder", "Título");
         columnTitleInput.setAttribute("maxlength", "15");
+
         imgLixo.src = "./src/img/trash-icon.png";
-        
+        deleteColumn.appendChild(imgLixo);
+        deleteColumn.classList.add("deleteColumn");
+
         ancora.appendChild(dropAreaDiv);
         dropAreaDiv.appendChild(columnTitleInput);
-        dropAreaDiv.appendChild(form);
         dropAreaDiv.appendChild(tasksButton);
-        dropAreaDiv.appendChild(imgLixo);
-        
-        counter++;
+        dropAreaDiv.appendChild(deleteColumn);
+        dropAreaDiv.appendChild(divImg);
+    }
+    counter++;
 
-        if(counter == 5){
-            let escode = document.getElementById("columnButton");
-            escode.style.display = "none";
-        }
+    if (counter == 5) {
+        let esconde = document.getElementById("columnButton");
+        esconde.style.display = "none";
     }
 }
 
-function createTasks(){
+function createTasks(generateID, tasksButton) {
     const tasksDiv = document.createElement("div");
     const tasksTitleInput = document.createElement("input");
-    const tasksForm = document.createElement("form");
+    const tasksTextarea = document.createElement("textarea");
 
     tasksDiv.classList.add("tasksDiv");
     tasksDiv.id = `-${Date.now()}`
     tasksTitleInput.classList.add("tasksTitle");
-    tasksForm.classList.add("tasksForm");
+    tasksTitleInput.setAttribute("placeholder", "Título");
+    tasksTitleInput.setAttribute("maxlength", "15");
+    tasksTextarea.classList.add("tasksDescription");
+    tasksTextarea.setAttribute("placeholder", "Descrição");
+
+    tasksDiv.appendChild(tasksTitleInput);
+    tasksDiv.appendChild(tasksTextarea);
+
+    const column = document.getElementById(generateID);
+    column.appendChild(tasksDiv);
+
+    column.insertBefore(tasksDiv, tasksButton);
 }
