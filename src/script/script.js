@@ -139,7 +139,7 @@ function createTasks(task, id1, id2) {
     const textP = document.createElement("p");
     const imgLixo = document.createElement("img")
 
-    tasksDiv.id = `+${Date.now()}`;
+    tasksDiv.id = `+${Date.now()}`; 
     titleH2.innerText = task.title;
     textP.innerText = task.text;
     imgLixo.src = "./src/img/trash-icon.png";
@@ -212,6 +212,7 @@ function MontaTaskSave(){
 }
 
 function montaColumn(columnId, arrTasksRecuperado){
+    let taskAreaId = "";
     const ancora = document.getElementById("columnsID");
     const dropAreaDiv = document.createElement("div");
     const taskArea = document.createElement("div");
@@ -259,7 +260,10 @@ function montaColumn(columnId, arrTasksRecuperado){
     dropAreaDiv.appendChild(divImg);
     divImg.appendChild(imgLixo);
 
+    taskArea.id = taskAreaId;
+    
     tasksButton.addEventListener("click", ()=>{
+        console.log("oi");
         let task = {
             id: taskArea.id,
             columnID: dropAreaDiv.id,
@@ -269,13 +273,13 @@ function montaColumn(columnId, arrTasksRecuperado){
             createTasks(task, tasksTitleInput.id, tasksTextarea.id);
         });
 
-        divImg.addEventListener("click", ()=> {
-            for(let i=0;i<arrColumns.length;i++){
-                if(arrColumns[i] == dropAreaDiv.id){
-                    arrColumns.splice(i,1);
-                    localStorage.removeItem("columnsID");
-                    const json = JSON.stringify(arrColumns);
-                    localStorage.setItem("columnsID", json);
+    divImg.addEventListener("click", ()=> {
+        for(let i=0;i<arrColumns.length;i++){
+            if(arrColumns[i] == dropAreaDiv.id){
+                arrColumns.splice(i,1);
+                localStorage.removeItem("columnsID");
+                const json = JSON.stringify(arrColumns);
+                localStorage.setItem("columnsID", json);
                 }
             }
             dropAreaDiv.remove();
@@ -286,13 +290,15 @@ function montaColumn(columnId, arrTasksRecuperado){
             }
         })
 
-    for(let i=0;i<arrTasksRecuperado.length;i++){
-        if(arrTasksRecuperado[i].columnID == columnId){
-            console.log(arrTasksRecuperado[i]);
-            taskArea.id = arrTasksRecuperado[i].id;
-            MontaTask(arrTasksRecuperado[i])
+        for(let i=0;i<arrTasksRecuperado.length;i++){
+            if(arrTasksRecuperado[i].columnID == columnId){
+                console.log(arrTasksRecuperado[i]);
+                taskAreaId = arrTasksRecuperado[i].id;
+                taskArea.id = arrTasksRecuperado[i].id;
+                MontaTask(arrTasksRecuperado[i])
+            }
         }
-    }
+    
 }
 
 function MontaTask(Tasks){
