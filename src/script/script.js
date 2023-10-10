@@ -202,13 +202,16 @@ function MontaTaskSave(){
     for(let i=0;i<arrColumnsRecuperado.length;i++){
         arrColumns.push(arrColumnsRecuperado[i]);
     }
+    for(let i=0;i<arrTasksRecuperado.length;i++){
+        arrTasks.push(arrTasksRecuperado[i]);
+    }
 
     for(let i=0;i<arrColumnsRecuperado.length;i++){
         montaColumn(arrColumnsRecuperado[i], arrTasksRecuperado);
     }
 }
 
-function montaColumn(columnID, arrTasksRecuperado){
+function montaColumn(columnId, arrTasksRecuperado){
     const ancora = document.getElementById("columnsID");
     const dropAreaDiv = document.createElement("div");
     const taskArea = document.createElement("div");
@@ -217,7 +220,7 @@ function montaColumn(columnID, arrTasksRecuperado){
     const divImg = document.createElement("div");
     const imgLixo = document.createElement("img");
 
-    dropAreaDiv.id = columnID;
+    dropAreaDiv.id = columnId;
     
     tasksButton.innerText = "Save";
     imgLixo.src = "./src/img/trash-icon.png";
@@ -283,11 +286,39 @@ function montaColumn(columnID, arrTasksRecuperado){
             }
         })
 
-    for(let i=0;i<arrTasksRecuperado;i++){
-        
+    for(let i=0;i<arrTasksRecuperado.length;i++){
+        if(arrTasksRecuperado[i].columnID == columnId){
+            console.log(arrTasksRecuperado[i]);
+            taskArea.id = arrTasksRecuperado[i].id;
+            MontaTask(arrTasksRecuperado[i])
+        }
     }
 }
 
+function MontaTask(Tasks){
+    const taskArea = document.getElementById(Tasks.id);
+    const tasksDiv = document.createElement("div");
+    const titleH2 = document.createElement("h2");
+    const textP = document.createElement("p");
+    const imgLixo = document.createElement("img")
 
+    tasksDiv.id = `+${Date.now()}`;
+    titleH2.innerText = Tasks.title;
+    textP.innerText = Tasks.text;
+    imgLixo.src = "./src/img/trash-icon.png";
+
+    imgLixo.addEventListener("click", ()=>{
+        taskDelete(tasksDiv.id, Tasks);
+    })
+
+    tasksDiv.classList.add("tasksDiv");
+    titleH2.classList.add("tasksTitle");
+    textP.classList.add("tasksDescription");
+
+    taskArea.appendChild(tasksDiv);
+    tasksDiv.appendChild(titleH2);
+    tasksDiv.appendChild(textP);
+    tasksDiv.appendChild(imgLixo);
+}
 
 MontaTaskSave()
