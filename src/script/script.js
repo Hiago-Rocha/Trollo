@@ -57,7 +57,7 @@ function createColumn() {
             }
         })*/
 
-        tasksButton.innerText = "Save";
+        tasksButton.innerText = "+";
         imgLixo.src = "./src/img/trash-icon.png";
 
         dropAreaDiv.classList.add("dropArea");
@@ -223,7 +223,7 @@ function montaColumn(columnId, arrTasksRecuperado){
 
     dropAreaDiv.id = columnId;
     
-    tasksButton.innerText = "Save";
+    tasksButton.innerText = "+";
     imgLixo.src = "./src/img/trash-icon.png";
 
     dropAreaDiv.classList.add("dropArea");
@@ -236,6 +236,7 @@ function montaColumn(columnId, arrTasksRecuperado){
     const tasksTextarea = document.createElement("textarea");
     const imgLixoTask = document.createElement("img");
 
+    tasksDiv.id = `i${Date.now}`
     tasksTitleInput.id = `i${Date.now()}`
     tasksTextarea.id = `a${Date.now()}`
 
@@ -261,7 +262,12 @@ function montaColumn(columnId, arrTasksRecuperado){
     divImg.appendChild(imgLixo);
 
     taskArea.id = taskAreaId;
+    tasksDiv.style.display = "none"
     
+    dropAreaDiv.addEventListener("click", ()=>{
+        Formulario(dropAreaDiv.id, tasksDiv.id);
+    })
+
     tasksButton.addEventListener("click", ()=>{
         console.log("oi");
         let task = {
@@ -325,6 +331,10 @@ function MontaTask(Tasks){
     tasksDiv.appendChild(titleH2);
     tasksDiv.appendChild(textP);
     tasksDiv.appendChild(imgLixo);
+}
+
+function Formulario(columnID, taskID){
+    taskID.style.display = "block"
 }
 
 MontaTaskSave()
