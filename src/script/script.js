@@ -49,15 +49,14 @@ function createColumn() {
 
         columnTitleArea.setAttribute("placeholder", "Título");
         columnTitleArea.setAttribute("maxlength", "15");
-        /*columnTitleArea.addEventListener("keyup", function(){
-            let key = e.which || e.keyCode;
-            if (key == 13){
-                //saveTitle(columnTitleArea.value);
-                console.log(columnTitleArea.value);
+        columnTitleArea.addEventListener("keyup", function(event){
+            if (event.keyCode === 13){
+                let title = columnTitleArea.value.replace(/(\r\n|\n|\r)/gm, "")
+                saveColumns(dropAreaDiv.id, title);
             }
-        })*/
+        })
 
-        tasksButton.innerText = "Save";
+        tasksButton.innerText = "+";
         imgLixo.src = "./src/img/trash-icon.png";
 
         dropAreaDiv.classList.add("dropArea");
@@ -105,8 +104,16 @@ function createColumn() {
         });
 
         divImg.addEventListener("click", ()=> {
+            for(let i = arrTasks.length-1; i >= 0; i--) {
+                if(arrTasks[i].columnID == dropAreaDiv.id){
+                    arrTasks.splice(i, 1);
+                    localStorage.removeItem("tasksSave");
+                    const json = JSON.stringify(arrTasks);
+                    localStorage.setItem("tasksSave", json);
+                }
+            }
             for(let i=0;i<arrColumns.length;i++){
-                if(arrColumns[i] == dropAreaDiv.id){
+                if(arrColumns[i].id == dropAreaDiv.id){
                     arrColumns.splice(i,1);
                     localStorage.removeItem("columnsID");
                     const json = JSON.stringify(arrColumns);
@@ -182,8 +189,19 @@ function saveTask(task){
     localStorage.setItem("tasksSave", json);
 }
 
-function saveColumns(id){
-    arrColumns.push(id)
+
+function saveColumns(id, title){
+    let column = {
+        id: id,
+        title: title
+    }
+    for(let i=0;i<arrColumns.length;i++){
+        if(arrColumns[i].id == column.id){
+            arrColumns.splice(i,1);
+            localStorage.removeItem("columnsID");
+        }
+    }
+    arrColumns.push(column)
     const json = JSON.stringify(arrColumns);
     localStorage.setItem("columnsID", json);
 }
@@ -202,8 +220,10 @@ function MontaTaskSave(){
     for(let i=0;i<arrColumnsRecuperado.length;i++){
         arrColumns.push(arrColumnsRecuperado[i]);
     }
-    for(let i=0;i<arrTasksRecuperado.length;i++){
-        arrTasks.push(arrTasksRecuperado[i]);
+    if(arrTasksRecuperado != null){
+        for(let i=0;i<arrTasksRecuperado.length;i++){
+            arrTasks.push(arrTasksRecuperado[i]);
+        }
     }
 
     for(let i=0;i<arrColumnsRecuperado.length;i++){
@@ -221,9 +241,9 @@ function montaColumn(columnId, arrTasksRecuperado){
     const divImg = document.createElement("div");
     const imgLixo = document.createElement("img");
 
-    dropAreaDiv.id = columnId;
+    dropAreaDiv.id = columnId.id;
     
-    tasksButton.innerText = "Save";
+    tasksButton.innerText = "+";
     imgLixo.src = "./src/img/trash-icon.png";
 
     dropAreaDiv.classList.add("dropArea");
@@ -243,6 +263,16 @@ function montaColumn(columnId, arrTasksRecuperado){
     tasksTitleInput.classList.add("tasksTitle");
     tasksTextarea.classList.add("tasksDescription");
 
+    columnTitleArea.setAttribute("placeholder", "Título");
+    columnTitleArea.setAttribute("maxlength", "15");
+    columnTitleArea.innerText = columnId.title;
+    columnTitleArea.addEventListener("keyup", function(event){
+        if (event.keyCode === 13){
+            let title = columnTitleArea.value.replace(/(\r\n|\n|\r)/gm, "")
+            saveColumns(dropAreaDiv.id, title);
+        }
+    })
+
     tasksTitleInput.setAttribute("placeholder", "Título");
     tasksTitleInput.setAttribute("maxlength", "15");
     tasksTextarea.setAttribute("placeholder", "Descrição");
@@ -260,7 +290,7 @@ function montaColumn(columnId, arrTasksRecuperado){
     dropAreaDiv.appendChild(divImg);
     divImg.appendChild(imgLixo);
 
-    taskArea.id = taskAreaId;
+    taskArea.id = `-${Date.now()}`;
     
     tasksButton.addEventListener("click", ()=>{
         console.log("oi");
@@ -274,8 +304,16 @@ function montaColumn(columnId, arrTasksRecuperado){
         });
 
     divImg.addEventListener("click", ()=> {
+        for(let i = arrTasks.length-1; i >= 0; i--) {
+            if(arrTasks[i].columnID == dropAreaDiv.id){
+                arrTasks.splice(i, 1);
+                localStorage.removeItem("tasksSave");
+                const json = JSON.stringify(arrTasks);
+                localStorage.setItem("tasksSave", json);
+            }
+        }
         for(let i=0;i<arrColumns.length;i++){
-            if(arrColumns[i] == dropAreaDiv.id){
+            if(arrColumns[i].id == dropAreaDiv.id){
                 arrColumns.splice(i,1);
                 localStorage.removeItem("columnsID");
                 const json = JSON.stringify(arrColumns);
