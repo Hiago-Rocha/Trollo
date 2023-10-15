@@ -40,7 +40,7 @@ function columnCreate() {
         const columnTitle = document.createElement("textarea");
         const taskButton = document.createElement("button");
         const divImg = document.createElement("div");
-        const imgLixo = document.createElement("img");
+        const trashImg = document.createElement("img");
 
         let taskGenerateID = `-${Date.now()}`;
         let columnGenerateID =`${Date.now()}`;
