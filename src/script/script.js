@@ -36,7 +36,8 @@ function createColumn() {
         const ancora = document.getElementById("columnsID");
         const dropAreaDiv = document.createElement("div");
         const taskArea = document.createElement("div");
-        const columnTitleArea = document.createElement("textarea");
+        const columnTitleArea = document.createElement("div");
+        const columnTitle = document.createElement("textarea");
         const tasksButton = document.createElement("button");
         const divImg = document.createElement("div");
         const imgLixo = document.createElement("img");
@@ -47,11 +48,11 @@ function createColumn() {
         dropAreaDiv.id = dropGenerateID;
 
 
-        columnTitleArea.setAttribute("placeholder", "Título");
-        columnTitleArea.setAttribute("maxlength", "15");
-        columnTitleArea.addEventListener("keyup", function(event){
+        columnTitle.setAttribute("placeholder", "Título");
+        columnTitle.setAttribute("maxlength", "15");
+        columnTitle.addEventListener("keyup", function(event){
             if (event.keyCode === 13){
-                let title = columnTitleArea.value.replace(/(\r\n|\n|\r)/gm, "")
+                let title = columnTitle.value.replace(/(\r\n|\n|\r)/gm, "")
                 saveColumns(dropAreaDiv.id, title);
             }
         })
@@ -60,7 +61,8 @@ function createColumn() {
         imgLixo.src = "./src/img/trash-icon.png";
 
         dropAreaDiv.classList.add("dropArea");
-        columnTitleArea.classList.add("columnTitle");
+        columnTitleArea.classList.add("columnTitleArea")
+        columnTitle.classList.add("columnTitle");
         tasksButton.classList.add("tasksButton");
         divImg.classList.add("deleteColumn");
 
@@ -87,6 +89,7 @@ function createColumn() {
 
         ancora.appendChild(dropAreaDiv);
         dropAreaDiv.appendChild(columnTitleArea);
+        columnTitleArea.appendChild(columnTitle);
         dropAreaDiv.appendChild(taskArea);
         dropAreaDiv.appendChild(tasksDiv);
         dropAreaDiv.appendChild(tasksButton);
@@ -236,7 +239,8 @@ function montaColumn(columnId, arrTasksRecuperado){
     const ancora = document.getElementById("columnsID");
     const dropAreaDiv = document.createElement("div");
     const taskArea = document.createElement("div");
-    const columnTitleArea = document.createElement("textarea");
+    const columnTitleArea = document.createElement("div");
+    const columnTitle = document.createElement("textarea");
     const tasksButton = document.createElement("button");
     const divImg = document.createElement("div");
     const imgLixo = document.createElement("img");
@@ -247,7 +251,8 @@ function montaColumn(columnId, arrTasksRecuperado){
     imgLixo.src = "./src/img/trash-icon.png";
 
     dropAreaDiv.classList.add("dropArea");
-    columnTitleArea.classList.add("columnTitle");
+    columnTitleArea.classList.add("columnTitleArea")
+    columnTitle.classList.add("columnTitle");
     tasksButton.classList.add("tasksButton");
     divImg.classList.add("deleteColumn");
 
@@ -263,12 +268,12 @@ function montaColumn(columnId, arrTasksRecuperado){
     tasksTitleInput.classList.add("tasksTitle");
     tasksTextarea.classList.add("tasksDescription");
 
-    columnTitleArea.setAttribute("placeholder", "Título");
-    columnTitleArea.setAttribute("maxlength", "15");
-    columnTitleArea.innerText = columnId.title;
-    columnTitleArea.addEventListener("keyup", function(event){
+    columnTitle.setAttribute("placeholder", "Título");
+    columnTitle.setAttribute("maxlength", "15");
+    columnTitle.innerText = columnId.title;
+    columnTitle.addEventListener("keyup", function(event){
         if (event.keyCode === 13){
-            let title = columnTitleArea.value.replace(/(\r\n|\n|\r)/gm, "")
+            let title = columnTitle.value.replace(/(\r\n|\n|\r)/gm, "")
             saveColumns(dropAreaDiv.id, title);
         }
     })
@@ -284,6 +289,7 @@ function montaColumn(columnId, arrTasksRecuperado){
 
     ancora.appendChild(dropAreaDiv);
     dropAreaDiv.appendChild(columnTitleArea);
+    columnTitleArea.appendChild(columnTitle);
     dropAreaDiv.appendChild(taskArea);
     dropAreaDiv.appendChild(tasksDiv);
     dropAreaDiv.appendChild(tasksButton);
