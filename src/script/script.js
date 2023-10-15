@@ -191,25 +191,6 @@ function saveTask(task){
     const json = JSON.stringify(arrTasks);
     localStorage.setItem("tasksSave", json);
 }
-
-
-/*function saveColumns(id, title){
-    let column = {
-        id: id,
-        title: title
-    }
-    for(let i=0;i<columnArr.length;i++){
-        if(columnArr[i].id == column.id){
-            let columnRecuperado = localStorage.getItem('columnsID');
-            let arrColumnsRecuperado = JSON.parse(columnRecuperado);
-            arrColumnsRecuperado[i].title = column.title;
-            
-        }
-    }
-    columnArr.push(column);
-    const json = JSON.stringify(columnArr);
-    localStorage.setItem("columnsID", json);
-}*/
 function saveColumns(id, title) {
     let column = {
         id: id,
