@@ -215,7 +215,7 @@
 .deleteColumn {
     border-top: 2px solid black;
     position: fixed;
-    bottom: 242px;
+    top: 655px;
     font-size: 30px;
     height: 40px;
     width: 198px;
