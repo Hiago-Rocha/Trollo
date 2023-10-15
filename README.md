@@ -21,4 +21,4 @@ Funcionalidades a serem incorporadas futuramente: adicionar novos membros que po
 
 Ferramenta funcionará em página web, elaborada em linguagens de programação e marcação Javascript/CSS/HTML com inspiração e funções semelhantes ao TRELLO.COM.BR.
 
-Será utilizado também o próprio Trollo para organização do projeto e controle de Backlog, além do FIGMA para prototipagem.
+Será utilizado também o próprio Trello para organização do projeto e controle de Backlog, além do FIGMA para prototipagem.
