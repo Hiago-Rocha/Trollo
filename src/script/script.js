@@ -235,7 +235,6 @@ function MontaTaskSave(){
 }
 
 function montaColumn(columnId, arrTasksRecuperado){
-    let taskAreaId = "";
     const ancora = document.getElementById("columnsID");
     const dropAreaDiv = document.createElement("div");
     const taskArea = document.createElement("div");
@@ -244,7 +243,8 @@ function montaColumn(columnId, arrTasksRecuperado){
     const tasksButton = document.createElement("button");
     const divImg = document.createElement("div");
     const imgLixo = document.createElement("img");
-
+    
+    taskArea.id = `-${Date.now()}`;
     dropAreaDiv.id = columnId.id;
     
     tasksButton.innerText = "+";
@@ -296,7 +296,7 @@ function montaColumn(columnId, arrTasksRecuperado){
     dropAreaDiv.appendChild(divImg);
     divImg.appendChild(imgLixo);
 
-    taskArea.id = `-${Date.now()}`;
+
     
     tasksButton.addEventListener("click", ()=>{
         let task = {

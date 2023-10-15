@@ -110,6 +110,7 @@
 
 .container{
     margin-left: 120px;
+    margin-top: 40px;
     display: flex;
 }
 .columns{
@@ -128,10 +129,35 @@
     max-height: 500px;
     margin: 20px;
     box-shadow: 4px 4px 5px rgba(34, 33, 33, 0.5);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.dropArea::-webkit-scrollbar {
+  width: 5px;
+}
+
+.dropArea::-webkit-scrollbar-track {
+  background-color: rgb(162, 162, 162);
+  margin-top: 7px;
+  margin-bottom: 42px;
+  border-top-left-radius: 100px;
+  border-top-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 100px;
+}
+
+.dropArea::-webkit-scrollbar-thumb {
+  background-color: rgb(92, 92, 92);
+  border-top-left-radius: 100px;
+  border-top-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 100px;
 }
 
 .columnTitleArea{
-    top: 0;
+    position: fixed;
+    top: 121px;
     background-color: black;
     height: 50px;
     width: 200px;
@@ -173,7 +199,7 @@
     margin-top: 7px;
     margin-left: 4px;
     margin-right: 4px;
-    width: 190px;
+    width: 186px;
     text-align: center;
     border-radius: 8px;
     background-color: #d9d9d9;
@@ -183,11 +209,11 @@
 
 .deleteColumn{
     border-top: 2px solid black;
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    bottom: 279px;
     font-size: 30px;
     height: 40px;
-    width: 100%;
+    width: 198px;
     text-align: center;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -205,10 +231,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 7px;
-    margin-left: 4px;
-    margin-right: 4px;
-    width: 190px;
+    margin-top: 15px;
+    margin-left: 8px;
+    margin-right: 8px;
+    width: 182px;
     background-color: #d9d9d9;
     border-radius: 8px;
     height: 130px;
