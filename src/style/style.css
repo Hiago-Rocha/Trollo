@@ -8,7 +8,7 @@
 .menu div{
     display: flex;
     align-items: center;
-    margin-left: 5%;
+    margin-left: 100px;
 }
 .menu div h1{
     font-family:sans-serif;
@@ -31,8 +31,9 @@
 .menu img{
     height: 42px;
     width: 42px;
-    margin: 1.5%;
-    margin-top: 2.3%;
+    margin: 20px;
+    margin-right: 40px;
+    margin-top: 40px;
     cursor: pointer;
 }
 
@@ -50,20 +51,20 @@
     box-shadow: 4px 4px 5px rgba(34, 33, 33, 0.5);
     background-color: white;
     position: absolute;
-    right: 1%;
-    top: 12%;
+    right: 35px;
+    top: 100px;
     display: flex;
     flex-direction: column;
     height: 302px;
     width: 52px;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .corFundo div{
     height: 30px;
     width: 30px;
     border: 0.5px solid black;
-    border-radius: 50%;
+    border-radius: 100%;
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -108,35 +109,38 @@
 /* conteudo da main */
 
 .container{
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 120px;
     display: flex;
 }
 .columns{
     display: flex;
 }
+
 .dropArea{
     display: flex;
+    position: relative;
     background-color: #f1f1f1;
     flex-direction: column;
     align-items: center;
-    border-radius: 4.6%;
+    border-radius: 8px;
     max-width: 200px;
-    min-height: 400px;
-    max-height: 600px;
-    margin: 1.8%;
+    min-height: 500px;
+    max-height: 500px;
+    margin: 20px;
     box-shadow: 4px 4px 5px rgba(34, 33, 33, 0.5);
 }
 
 .columnTitle{
+    position: absolute;
+    top: 0;
     font-family:sans-serif;
-    color: white;
-    font-size: 100%;
+    color: #f1f1f1;
+    font-size: 20px;
+    width: 98%;
     text-align: center;
     display: flex;
     background-color: black;
     height: 50px;
-    align-items: center;
     border-radius: 8px;
 }
 
@@ -144,13 +148,12 @@
     border: none;
     display: block;
     font-size: 45px;
+    border-radius: 8px;
     color: white;
-    margin-top: 0.5%;
-    margin-left: 5%;
+    margin: 20px;
     height: 50px;
     width: 200px;
     text-align: center;
-    border-radius: 10px;
     background-color: black;
     cursor: pointer;
     box-shadow: 4px 4px 5px rgba(34, 33, 33, 0.5);
@@ -162,54 +165,69 @@
     font-size: 30px;
     color: black;
     height: 40px;
-    margin: 2%;
-    width: 94%;
+    margin-top: 7px;
+    margin-left: 4px;
+    margin-right: 4px;
+    width: 190px;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: #d9d9d9;
     cursor: pointer;
 }
 
 
 .deleteColumn{
-    border: none;
-    display: block;
+    border-top: 2px solid black;
+    position: absolute;
+    bottom: 0;
     font-size: 30px;
-    color: black;
     height: 40px;
-    margin: 2%;
     width: 100%;
     text-align: center;
-    border-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
     background-color: #f1f1f1;
     cursor: pointer;
 }
 
 .deleteColumn img{
-    width: 25px;
-    height: 25px;
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
 }
 
 .tasksDiv{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2%;
-    width: 163px;
+    margin-top: 7px;
+    margin-left: 4px;
+    margin-right: 4px;
+    width: 190px;
     background-color: #d9d9d9;
-    border-radius: 10px;
-    text-align: start;
-    height: 80px;
-    font-size: 30px;
+    border-radius: 8px;
+    height: 130px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .tasksDiv h2{
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 5px;
+    padding-bottom: 2px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
+
 .tasksDiv p{
-    font-size: 16px;
+    padding-top: 5px;
+    padding-left: 6px;
     text-align: start;
-    overflow: auto;
     scrollbar-color: black;
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: justify;
+    word-wrap: break-word;
 }
 .tasksDiv img{
     width: 20px;
@@ -219,13 +237,33 @@
 
 .tasksTitle{
     background-color: transparent;
+    width: 98%;
+    height: 30px;
+    border-bottom: 2px solid black;
+    font-size: 20px;
+    padding-top: 5px;
+    padding-bottom: 2px;
+    font-weight: bold;
     text-align: center;
     font-family: sans-serif;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: auto;
 }
 
 .tasksDescription{
     background-color: transparent;
     font-family: sans-serif;
-    height: 50px;
+    font-size: 15px;
+    padding-top: 5px;
+    padding-left: 6px;
+    text-align: justify;
+    height: 100px;
+    width: 94%;
+    max-height: 150px;
+    max-width: 94%;
     scrollbar-color: black;
+    word-wrap: break-word;
+    overflow-y: auto;
+    overflow-x: hidden;
 }

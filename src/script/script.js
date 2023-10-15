@@ -293,7 +293,6 @@ function montaColumn(columnId, arrTasksRecuperado){
     taskArea.id = `-${Date.now()}`;
     
     tasksButton.addEventListener("click", ()=>{
-        console.log("oi");
         let task = {
             id: taskArea.id,
             columnID: dropAreaDiv.id,
@@ -329,7 +328,7 @@ function montaColumn(columnId, arrTasksRecuperado){
         })
 
         for(let i=0;i<arrTasksRecuperado.length;i++){
-            if(arrTasksRecuperado[i].columnID == columnId){
+            if(arrTasksRecuperado[i].columnID == columnId.id){
                 console.log(arrTasksRecuperado[i]);
                 taskAreaId = arrTasksRecuperado[i].id;
                 taskArea.id = arrTasksRecuperado[i].id;
@@ -350,7 +349,6 @@ function MontaTask(Tasks){
     titleH2.innerText = Tasks.title;
     textP.innerText = Tasks.text;
     imgLixo.src = "./src/img/trash-icon.png";
-
     imgLixo.addEventListener("click", ()=>{
         taskDelete(tasksDiv.id, Tasks);
     })
