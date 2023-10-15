@@ -42,8 +42,8 @@ function columnCreate() {
         const divImg = document.createElement("div");
         const trashImg = document.createElement("img");
 
-        let taskGenerateID = `-${Date.now()}`;
-        let columnGenerateID =`${Date.now()}`;
+        let taskGenerateID = `${Math.random()}`;
+        let columnGenerateID =`${Math.random()}`;
         taskArea.id = taskGenerateID;
         columnArea.id = columnGenerateID;
 
@@ -71,8 +71,8 @@ function columnCreate() {
         const tasksTextarea = document.createElement("textarea");
         const taskImgTrash = document.createElement("img");
 
-        tasksTitleInput.id = `i${Date.now()}`
-        tasksTextarea.id = `a${Date.now()}`
+        tasksTitleInput.id = `${Math.random()}`
+        tasksTextarea.id = `${Math.random()}`
 
         tasksDiv.classList.add("tasksDiv");
         tasksTitleInput.classList.add("tasksTitle");
@@ -149,7 +149,7 @@ function createTasks(task, id1, id2) {
     const taskDescription = document.createElement("p");
     const trashImg = document.createElement("img")
 
-    tasksDiv.id = `+${Date.now()}`; 
+    tasksDiv.id = `${Math.random()}`; 
     taskTitle.innerText = task.title;
     taskDescription.innerText = task.text;
     trashImg.src = "./src/img/trash-icon.png";
@@ -193,18 +193,40 @@ function saveTask(task){
 }
 
 
-function saveColumns(id, title){
+/*function saveColumns(id, title){
     let column = {
         id: id,
         title: title
     }
     for(let i=0;i<columnArr.length;i++){
         if(columnArr[i].id == column.id){
-            columnArr.splice(i,1);
-            localStorage.removeItem("columnsID");
+            let columnRecuperado = localStorage.getItem('columnsID');
+            let arrColumnsRecuperado = JSON.parse(columnRecuperado);
+            arrColumnsRecuperado[i].title = column.title;
+            
         }
     }
-    columnArr.push(column)
+    columnArr.push(column);
+    const json = JSON.stringify(columnArr);
+    localStorage.setItem("columnsID", json);
+}*/
+function saveColumns(id, title) {
+    let column = {
+        id: id,
+        title: title
+    }
+
+    for (let i = 0; i < columnArr.length; i++) {
+        if (columnArr[i].id == column.id) {
+            columnArr[i] = column;
+            const json = JSON.stringify(columnArr);
+            localStorage.setItem("columnsID", json);
+            return;
+        }
+    }
+
+    columnArr.push(column);
+
     const json = JSON.stringify(columnArr);
     localStorage.setItem("columnsID", json);
 }
@@ -261,8 +283,8 @@ function buildColumn(columnId, arrTasksRecuperado){
     const tasksTextarea = document.createElement("textarea");
     const taskImgTrash = document.createElement("img");
 
-    tasksTitleInput.id = `i${Date.now()}`
-    tasksTextarea.id = `a${Date.now()}`
+    tasksTitleInput.id = `${Math.random()}`
+    tasksTextarea.id = `${Math.random()}`
 
     tasksDiv.classList.add("tasksDiv");
     tasksTitleInput.classList.add("tasksTitle");
@@ -270,7 +292,9 @@ function buildColumn(columnId, arrTasksRecuperado){
 
     columnTitle.setAttribute("placeholder", "Título");
     columnTitle.setAttribute("maxlength", "15");
-    columnTitle.innerText = columnId.title;
+    if(columnId.title != null){
+        columnTitle.innerText = columnId.title;
+    }
     columnTitle.addEventListener("keyup", function(event){
         if (event.keyCode === 13){
             let title = columnTitle.value.replace(/(\r\n|\n|\r)/gm, "")
@@ -296,7 +320,8 @@ function buildColumn(columnId, arrTasksRecuperado){
     columnArea.appendChild(divImg);
     divImg.appendChild(trashImg);
 
-    taskArea.id = `-${Date.now()}`;
+    taskArea.id = `${Math.random()}`;
+    console.log(taskArea.id);
     
     taskButton.addEventListener("click", ()=>{
         let task = {
@@ -332,15 +357,15 @@ function buildColumn(columnId, arrTasksRecuperado){
                 esconde.style.display = "block";
             }
         })
-
-        for(let i=0;i<arrTasksRecuperado.length;i++){
+        if(arrTasksRecuperado != null){
+            for(let i=0;i<arrTasksRecuperado.length;i++){
             if(arrTasksRecuperado[i].columnID == columnId.id){
-                console.log(arrTasksRecuperado[i]);
                 taskAreaId = arrTasksRecuperado[i].id;
                 taskArea.id = arrTasksRecuperado[i].id;
                 buildTask(arrTasksRecuperado[i])
             }
         }
+    }
     
 }
 
@@ -351,7 +376,7 @@ function buildTask(Tasks){
     const taskDescription = document.createElement("p");
     const trashImg = document.createElement("img")
 
-    tasksDiv.id = `+${Date.now()}`;
+    tasksDiv.id = `${Math.random()}`;
     taskTitle.innerText = Tasks.title;
     taskDescription.innerText = Tasks.text;
     trashImg.src = "./src/img/trash-icon.png";
