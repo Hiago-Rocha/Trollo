@@ -12,10 +12,10 @@ function changeBackgroundColor(backgroundColor) {
     let background = document.getElementById("background");
     background.style.backgroundColor = backgroundColor;
     h1.style.color = backgroundColor;
-    salvarCor(backgroundColor);
+    saveColor(backgroundColor);
 }
 
-function salvarCor(backgroundColor) {
+function saveColor(backgroundColor) {
     localStorage.setItem("savedColor", backgroundColor);
 }
 
@@ -31,7 +31,7 @@ let columnCounter = 0;
 let columnArr = [];
 let arrTasks = [];
 
-function columnCreate() {
+function createColumn() {
     if (columnCounter < 5) {
         const ancora = document.getElementById("columnsID");
         const columnArea = document.createElement("div");
@@ -126,18 +126,19 @@ function columnCreate() {
             columnArea.remove();
             columnCounter--
             if(columnCounter < 5){
-                let esconde = document.getElementById("columnButton");
-                esconde.style.display = "block";
+                let hide = document.getElementById("columnButton");
+                hide.style.display = "block";
             }
         })
 
         saveColumns(columnArea.id);
     }
+
     columnCounter++;
 
     if (columnCounter == 5) {
-        let esconde = document.getElementById("columnButton");
-        esconde.style.display = "none";
+        let hide = document.getElementById("columnButton");
+        hide.style.display = "none";
     }
 }
 
@@ -191,6 +192,7 @@ function saveTask(task){
     const json = JSON.stringify(arrTasks);
     localStorage.setItem("tasksSave", json);
 }
+
 function saveColumns(id, title) {
     let column = {
         id: id,
@@ -218,14 +220,16 @@ function loadTask(){
     let arrColumnsRecuperado = JSON.parse(column);
     let arrTasksRecuperado = JSON.parse(tasks);
     columnCounter = arrColumnsRecuperado.length;
+
     if(columnCounter == 5){
-        let esconde = document.getElementById("columnButton");
-        esconde.style.display = "none";
+        let hide = document.getElementById("columnButton");
+        hide.style.display = "none";
     }
 
     for(let i=0;i<arrColumnsRecuperado.length;i++){
         columnArr.push(arrColumnsRecuperado[i]);
     }
+
     if(arrTasksRecuperado != null){
         for(let i=0;i<arrTasksRecuperado.length;i++){
             arrTasks.push(arrTasksRecuperado[i]);
@@ -273,9 +277,11 @@ function buildColumn(columnId, arrTasksRecuperado){
 
     columnTitle.setAttribute("placeholder", "Título");
     columnTitle.setAttribute("maxlength", "15");
+
     if(columnId.title != null){
         columnTitle.innerText = columnId.title;
     }
+
     columnTitle.addEventListener("keyup", function(event){
         if (event.keyCode === 13){
             let title = columnTitle.value.replace(/(\r\n|\n|\r)/gm, "")
@@ -302,7 +308,6 @@ function buildColumn(columnId, arrTasksRecuperado){
     divImg.appendChild(trashImg);
 
     taskArea.id = `${Math.random()}`;
-    console.log(taskArea.id);
     
     taskButton.addEventListener("click", ()=>{
         let task = {
@@ -323,6 +328,7 @@ function buildColumn(columnId, arrTasksRecuperado){
                 localStorage.setItem("tasksSave", json);
             }
         }
+
         for(let i=0;i<columnArr.length;i++){
             if(columnArr[i].id == columnArea.id){
                 columnArr.splice(i,1);
@@ -331,13 +337,15 @@ function buildColumn(columnId, arrTasksRecuperado){
                 localStorage.setItem("columnsID", json);
                 }
             }
+
             columnArea.remove();
             columnCounter--
             if(columnCounter < 5){
-                let esconde = document.getElementById("columnButton");
-                esconde.style.display = "block";
+                let hide = document.getElementById("columnButton");
+                hide.style.display = "block";
             }
         })
+        
         if(arrTasksRecuperado != null){
             for(let i=0;i<arrTasksRecuperado.length;i++){
             if(arrTasksRecuperado[i].columnID == columnId.id){
