@@ -31,7 +31,7 @@ let columnCounter = 0;
 let columnArr = [];
 let arrTasks = [];
 
-function createColumn() {
+function columnCreate() {
     if (columnCounter < 5) {
         const ancora = document.getElementById("columnsID");
         const columnArea = document.createElement("div");
@@ -115,6 +115,7 @@ function createColumn() {
                     localStorage.setItem("tasksSave", json);
                 }
             }
+            
             for(let i=0;i<columnArr.length;i++){
                 if(columnArr[i].id == columnArea.id){
                     columnArr.splice(i,1);
@@ -123,6 +124,7 @@ function createColumn() {
                     localStorage.setItem("columnsID", json);
                 }
             }
+            
             columnArea.remove();
             columnCounter--
             if(columnCounter < 5){
@@ -133,7 +135,7 @@ function createColumn() {
 
         saveColumns(columnArea.id);
     }
-
+    
     columnCounter++;
 
     if (columnCounter == 5) {
@@ -174,7 +176,6 @@ function createTasks(task, id1, id2) {
     saveTask(task);
 }
 
-
 function taskDelete(tasksDivID, task){
     for(let i=0;i<arrTasks.length;i++){
         if(arrTasks[i].id == task.id){
@@ -184,6 +185,7 @@ function taskDelete(tasksDivID, task){
             localStorage.setItem("tasksSave", json);
         }
     }
+    
     let tasksDiv = document.getElementById(tasksDivID).remove();
 }
 
@@ -218,9 +220,8 @@ function loadTask(){
     let column = localStorage.getItem('columnsID');
     let tasks = localStorage.getItem('tasksSave');
     let arrColumnsRecuperado = JSON.parse(column);
-    let arrTasksRecuperado = JSON.parse(tasks);
+    let recoveredArrTasks = JSON.parse(tasks);
     columnCounter = arrColumnsRecuperado.length;
-
     if(columnCounter == 5){
         let hide = document.getElementById("columnButton");
         hide.style.display = "none";
@@ -229,19 +230,19 @@ function loadTask(){
     for(let i=0;i<arrColumnsRecuperado.length;i++){
         columnArr.push(arrColumnsRecuperado[i]);
     }
-
-    if(arrTasksRecuperado != null){
-        for(let i=0;i<arrTasksRecuperado.length;i++){
-            arrTasks.push(arrTasksRecuperado[i]);
+    
+    if(recoveredArrTasks != null){
+        for(let i=0;i<recoveredArrTasks.length;i++){
+            arrTasks.push(recoveredArrTasks[i]);
         }
     }
 
     for(let i=0;i<arrColumnsRecuperado.length;i++){
-        buildColumn(arrColumnsRecuperado[i], arrTasksRecuperado);
+        buildColumn(arrColumnsRecuperado[i], recoveredArrTasks);
     }
 }
 
-function buildColumn(columnId, arrTasksRecuperado){
+function buildColumn(columnId, recoveredArrTasks){
     let taskAreaId = "";
     const ancora = document.getElementById("columnsID");
     const columnArea = document.createElement("div");
@@ -277,11 +278,10 @@ function buildColumn(columnId, arrTasksRecuperado){
 
     columnTitle.setAttribute("placeholder", "Título");
     columnTitle.setAttribute("maxlength", "15");
-
     if(columnId.title != null){
         columnTitle.innerText = columnId.title;
     }
-
+    
     columnTitle.addEventListener("keyup", function(event){
         if (event.keyCode === 13){
             let title = columnTitle.value.replace(/(\r\n|\n|\r)/gm, "")
@@ -308,6 +308,7 @@ function buildColumn(columnId, arrTasksRecuperado){
     divImg.appendChild(trashImg);
 
     taskArea.id = `${Math.random()}`;
+    console.log(taskArea.id);
     
     taskButton.addEventListener("click", ()=>{
         let task = {
@@ -328,7 +329,6 @@ function buildColumn(columnId, arrTasksRecuperado){
                 localStorage.setItem("tasksSave", json);
             }
         }
-
         for(let i=0;i<columnArr.length;i++){
             if(columnArr[i].id == columnArea.id){
                 columnArr.splice(i,1);
@@ -337,7 +337,6 @@ function buildColumn(columnId, arrTasksRecuperado){
                 localStorage.setItem("columnsID", json);
                 }
             }
-
             columnArea.remove();
             columnCounter--
             if(columnCounter < 5){
@@ -345,13 +344,12 @@ function buildColumn(columnId, arrTasksRecuperado){
                 hide.style.display = "block";
             }
         })
-        
-        if(arrTasksRecuperado != null){
-            for(let i=0;i<arrTasksRecuperado.length;i++){
-            if(arrTasksRecuperado[i].columnID == columnId.id){
-                taskAreaId = arrTasksRecuperado[i].id;
-                taskArea.id = arrTasksRecuperado[i].id;
-                buildTask(arrTasksRecuperado[i])
+        if(recoveredArrTasks != null){
+            for(let i=0;i<recoveredArrTasks.length;i++){
+            if(recoveredArrTasks[i].columnID == columnId.id){
+                taskAreaId = recoveredArrTasks[i].id;
+                taskArea.id = recoveredArrTasks[i].id;
+                buildTask(recoveredArrTasks[i])
             }
         }
     }
