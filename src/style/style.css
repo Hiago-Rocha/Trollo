@@ -165,6 +165,7 @@
     height: 50px;
     width: 200px;
     border-radius: 8px;
+    box-shadow: 4px 0px 5px rgba(34, 33, 33, 0.5);
 }
 
 .columnTitle {
@@ -224,6 +225,7 @@
     border-bottom-left-radius: 10px;
     background-color: #f1f1f1;
     cursor: pointer;
+    box-shadow: 4px 4px 5px rgba(34, 33, 33, 0.5);
 }
 
 .deleteColumn img {
