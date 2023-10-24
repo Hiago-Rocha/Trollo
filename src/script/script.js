@@ -50,12 +50,9 @@ function columnCreate() {
 
         columnTitle.setAttribute("placeholder", "Título");
         columnTitle.setAttribute("maxlength", "15");
-        columnTitle.addEventListener("keyup", function(event){
-            if (event.keyCode === 13){
-                let title = columnTitle.value.replace(/(\r\n|\n|\r)/gm, "")
-                saveColumns(columnArea.id, title);
-            }
-        })
+        columnTitle.addEventListener("blur", function(event) {
+            saveColumns(columnArea.id, columnTitle.value);
+        });
 
         taskButton.innerText = "+";
         trashImg.src = "./src/img/trash-icon.png";
@@ -278,16 +275,13 @@ function buildColumn(columnId, recoveredArrTasks){
 
     columnTitle.setAttribute("placeholder", "Título");
     columnTitle.setAttribute("maxlength", "15");
-    if(columnId.title != null){
+    if(columnId.title){
         columnTitle.innerText = columnId.title;
     }
     
-    columnTitle.addEventListener("keyup", function(event){
-        if (event.keyCode === 13){
-            let title = columnTitle.value.replace(/(\r\n|\n|\r)/gm, "")
-            saveColumns(columnArea.id, title);
-        }
-    })
+    columnTitle.addEventListener("blur", function(event) {
+        saveColumns(columnArea.id, columnTitle.value);
+    });
 
     tasksTitleInput.setAttribute("placeholder", "Título");
     tasksTitleInput.setAttribute("maxlength", "15");
@@ -353,7 +347,6 @@ function buildColumn(columnId, recoveredArrTasks){
             }
         }
     }
-    
 }
 
 function buildTask(Tasks){
@@ -380,5 +373,4 @@ function buildTask(Tasks){
     tasksDiv.appendChild(taskDescription);
     tasksDiv.appendChild(trashImg);
 }
-
 loadTask();
