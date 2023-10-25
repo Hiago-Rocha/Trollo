@@ -71,7 +71,6 @@ function columnCreate() {
         tasksTitleInput.id = `${Math.random()}`
         tasksTextarea.id = `${Math.random()}`
 
-        taskArea.classList.add("taskArea");
         tasksDiv.classList.add("tasksDiv");
         tasksTitleInput.classList.add("tasksTitle");
         tasksTextarea.classList.add("taskDescription");
@@ -93,6 +92,17 @@ function columnCreate() {
         columnArea.appendChild(taskButton);
         columnArea.appendChild(divImg);
         divImg.appendChild(trashImg);
+
+        columnArea.addEventListener("dragover", (e) => {
+            const dragging = document.querySelector(".dragging");
+            const applyAfter = getNewPosition(columnArea);
+    
+            if(applyAfter){
+                applyAfter.insertAdjacentElement("afterend", dragging);
+            } else{
+                columnArea.prepend(dragging);
+            }
+        })
 
         taskButton.addEventListener("click", () => {
             let task = {
@@ -164,8 +174,7 @@ function createTasks(task, id1, id2) {
     
     document.addEventListener("dragend", (e) => {
         e.target.classList.remove("dragging");
-        let targetTaskArea = e.target.parentElement;
-        let targetColumn = targetTaskArea.parentElement;
+        let targetColumn = e.target.parentElement;
         let savedTask = localStorage.getItem("tasksSave");
         let recoveredArrTasks = JSON.parse(savedTask);
         let taskID = e.target.id;
@@ -179,17 +188,6 @@ function createTasks(task, id1, id2) {
             }
         }
     });
-    
-    taskArea.addEventListener("dragover", (e) => {
-        const dragging = document.querySelector(".dragging");
-        const applyAfter = getNewPosition(taskArea, e.clientY, task.columnID);
-
-        if(applyAfter){
-            applyAfter.insertAdjacentElement("afterend", dragging);
-        } else{
-            taskArea.prepend(dragging);
-        }
-    })
 
     trashImg.addEventListener("click", () => {
         taskDelete(task);
@@ -306,7 +304,6 @@ function buildColumn(columnId, recoveredArrTasks) {
     tasksTitleInput.id = `${Math.random()}`
     tasksTextarea.id = `${Math.random()}`
 
-    taskArea.classList.add("taskArea");
     tasksDiv.classList.add("tasksDiv");
     tasksTitleInput.classList.add("tasksTitle");
     tasksTextarea.classList.add("taskDescription");
@@ -341,6 +338,11 @@ function buildColumn(columnId, recoveredArrTasks) {
 
     taskArea.id = `${Math.random()}`;
     console.log(taskArea.id);
+
+    columnArea.addEventListener("dragover", (e) => {
+        const dragging = document.querySelector(".dragging");
+        columnArea.prepend(dragging);
+    })
 
     taskButton.addEventListener("click", () => {
         let task = {
@@ -429,17 +431,6 @@ function buildTask(Tasks) {
             }
         }
     });
-
-    taskArea.addEventListener("dragover", (e) => {
-        const dragging = document.querySelector(".dragging");
-        const applyAfter = getNewPosition(taskArea);
-
-        if(applyAfter){
-            applyAfter.insertAdjacentElement("afterend", dragging);
-        } else{
-            taskArea.prepend(dragging);
-        }
-    })
 
     taskArea.appendChild(tasksDiv);
     tasksDiv.appendChild(taskTitle);

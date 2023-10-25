@@ -327,11 +327,6 @@
     border-bottom-right-radius: 100px;
 }
 
-.taskArea{
-    width: 100%;
-    min-height: 40px;
-}
-
 .dragging{
     opacity: 0.5;
     cursor: grabbing;
