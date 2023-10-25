@@ -95,13 +95,8 @@ function columnCreate() {
 
         columnArea.addEventListener("dragover", (e) => {
             const dragging = document.querySelector(".dragging");
-            const applyAfter = getNewPosition(columnArea);
-    
-            if(applyAfter){
-                applyAfter.insertAdjacentElement("afterend", dragging);
-            } else{
-                columnArea.prepend(dragging);
-            }
+            taskArea.querySelectorAll(".item:not(.dragging");
+            columnArea.prepend(dragging);
         })
 
         taskButton.addEventListener("click", () => {
@@ -251,16 +246,16 @@ function saveColumns(id, title) {
 function loadTask() {
     let column = localStorage.getItem('columnsID');
     let tasks = localStorage.getItem('tasksSave');
-    let arrColumnsRecuperado = JSON.parse(column);
+    let recoveredArrColumns = JSON.parse(column);
     let recoveredArrTasks = JSON.parse(tasks);
-    columnCounter = arrColumnsRecuperado.length;
+    columnCounter = recoveredArrColumns.length;
     if (columnCounter == 5) {
         let hide = document.getElementById("columnButton");
         hide.style.display = "none";
     }
 
-    for (let i = 0; i < arrColumnsRecuperado.length; i++) {
-        columnArr.push(arrColumnsRecuperado[i]);
+    for (let i = 0; i < recoveredArrColumns.length; i++) {
+        columnArr.push(recoveredArrColumns[i]);
     }
 
     if (recoveredArrTasks != null) {
@@ -269,13 +264,12 @@ function loadTask() {
         }
     }
 
-    for (let i = 0; i < arrColumnsRecuperado.length; i++) {
-        buildColumn(arrColumnsRecuperado[i], recoveredArrTasks);
+    for (let i = 0; i < recoveredArrColumns.length; i++) {
+        buildColumn(recoveredArrColumns[i], recoveredArrTasks);
     }
 }
 
 function buildColumn(columnId, recoveredArrTasks) {
-    let taskAreaId = "";
     const ancora = document.getElementById("columnsID");
     const columnArea = document.createElement("div");
     const taskArea = document.createElement("div");
@@ -341,6 +335,7 @@ function buildColumn(columnId, recoveredArrTasks) {
 
     columnArea.addEventListener("dragover", (e) => {
         const dragging = document.querySelector(".dragging");
+        taskArea.querySelectorAll(".item:not(.dragging");
         columnArea.prepend(dragging);
     })
 
@@ -381,7 +376,7 @@ function buildColumn(columnId, recoveredArrTasks) {
     if (recoveredArrTasks != null) {
         for (let i = 0; i < recoveredArrTasks.length; i++) {
             if (recoveredArrTasks[i].columnID == columnId.id) {
-                taskAreaId = recoveredArrTasks[i].id;
+                let taskAreaId = recoveredArrTasks[i].id;
                 taskArea.id = recoveredArrTasks[i].id;
                 buildTask(recoveredArrTasks[i])
             }
@@ -416,8 +411,7 @@ function buildTask(Tasks) {
     
     document.addEventListener("dragend", (e) => {
         e.target.classList.remove("dragging");
-        let targetTaskArea = e.target.parentElement;
-        let targetColumn = targetTaskArea.parentElement;
+        let targetColumn = e.target.parentElement;
         let savedTask = localStorage.getItem("tasksSave");
         let recoveredArrTasks = JSON.parse(savedTask);
         let taskID = e.target.id;
@@ -436,10 +430,6 @@ function buildTask(Tasks) {
     tasksDiv.appendChild(taskTitle);
     tasksDiv.appendChild(taskDescription);
     tasksDiv.appendChild(trashImg);
-}
-
-function getNewPosition(taskArea){
-    const cards = taskArea.querySelectorAll(".item:not(.dragging");
 }
 
 loadTask();
