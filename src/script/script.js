@@ -27,15 +27,6 @@ window.onload = function loadColor() {
     h1.style.color = loadedColor;
 }
 
-
-document.addEventListener("dragstart", (e) => {
-    e.target.classList.add("dragging");
-});
-
-document.addEventListener("dragend", (e) => {
-    e.target.classList.remove("dragging");
-});
-
 let columnCounter = 0;
 let columnArr = [];
 let arrTasks = [];
@@ -50,8 +41,6 @@ function columnCreate() {
         const taskButton = document.createElement("button");
         const divImg = document.createElement("div");
         const trashImg = document.createElement("img");
-
-        //taskArea.addEventListener('ondrop', (e)=>{console.log(e)})
         
         let taskGenerateID = `${Math.random()}`;
         let columnGenerateID = `${Math.random()}`;
@@ -82,6 +71,7 @@ function columnCreate() {
         tasksTitleInput.id = `${Math.random()}`
         tasksTextarea.id = `${Math.random()}`
 
+        taskArea.classList.add("taskArea");
         tasksDiv.classList.add("tasksDiv");
         tasksTitleInput.classList.add("tasksTitle");
         tasksTextarea.classList.add("taskDescription");
@@ -161,12 +151,35 @@ function createTasks(task, id1, id2) {
     const trashImg = document.createElement("img")
 
     tasksDiv.id = `${Math.random()}`;
+    task.id = tasksDiv.id;
     taskTitle.innerText = task.title;
     taskDescription.innerText = task.text;
     trashImg.src = "./src/img/trash-icon.png";
 
     tasksDiv.setAttribute("draggable", "true");
 
+    document.addEventListener("dragstart", (e) => {
+        e.target.classList.add("dragging");
+    });
+    
+    document.addEventListener("dragend", (e) => {
+        e.target.classList.remove("dragging");
+        let targetTaskArea = e.target.parentElement;
+        let targetColumn = targetTaskArea.parentElement;
+        let savedTask = localStorage.getItem("tasksSave");
+        let recoveredArrTasks = JSON.parse(savedTask);
+        let taskID = e.target.id;
+    
+        for (let i = 0; i < recoveredArrTasks.length; i++) {
+            if (recoveredArrTasks[i].id === taskID) {
+                recoveredArrTasks[i].columnID = targetColumn.id;
+                arrTasks = recoveredArrTasks;
+                localStorage.setItem("tasksSave", JSON.stringify(arrTasks));
+                break;
+            }
+        }
+    });
+    
     taskArea.addEventListener("dragover", (e) => {
         const dragging = document.querySelector(".dragging");
         const applyAfter = getNewPosition(taskArea, e.clientY, task.columnID);
@@ -179,7 +192,7 @@ function createTasks(task, id1, id2) {
     })
 
     trashImg.addEventListener("click", () => {
-        taskDelete(tasksDiv.id, task);
+        taskDelete(task);
     })
 
     tasksDiv.classList.add("tasksDiv");
@@ -197,8 +210,7 @@ function createTasks(task, id1, id2) {
     saveTask(task);
 }
 
-
-function taskDelete(tasksDivID, task) {
+function taskDelete(task) {
     for (let i = 0; i < arrTasks.length; i++) {
         if (arrTasks[i].id == task.id) {
             arrTasks.splice(i, 1);
@@ -208,7 +220,7 @@ function taskDelete(tasksDivID, task) {
         }
     }
 
-    let tasksDiv = document.getElementById(tasksDivID).remove();
+    let tasksDiv = document.getElementById(task.id).remove();
 }
 
 function saveTask(task) {
@@ -294,6 +306,7 @@ function buildColumn(columnId, recoveredArrTasks) {
     tasksTitleInput.id = `${Math.random()}`
     tasksTextarea.id = `${Math.random()}`
 
+    taskArea.classList.add("taskArea");
     tasksDiv.classList.add("tasksDiv");
     tasksTitleInput.classList.add("tasksTitle");
     tasksTextarea.classList.add("taskDescription");
@@ -381,23 +394,45 @@ function buildTask(Tasks) {
     const taskDescription = document.createElement("p");
     const trashImg = document.createElement("img")
 
-    tasksDiv.id = `${Math.random()}`;
+    tasksDiv.id = Tasks.id;
+    Tasks.id = tasksDiv.id;
     taskTitle.innerText = Tasks.title;
     taskDescription.innerText = Tasks.text;
     trashImg.src = "./src/img/trash-icon.png";
     trashImg.addEventListener("click", () => {
-        taskDelete(tasksDiv.id, Tasks);
+        taskDelete(Tasks);
     })
-
     tasksDiv.classList.add("tasksDiv");
     taskTitle.classList.add("tasksTitle");
     taskDescription.classList.add("taskDescription");
 
     tasksDiv.setAttribute("draggable", "true");
+    
+    document.addEventListener("dragstart", (e) => {
+        e.target.classList.add("dragging");
+    });
+    
+    document.addEventListener("dragend", (e) => {
+        e.target.classList.remove("dragging");
+        let targetTaskArea = e.target.parentElement;
+        let targetColumn = targetTaskArea.parentElement;
+        let savedTask = localStorage.getItem("tasksSave");
+        let recoveredArrTasks = JSON.parse(savedTask);
+        let taskID = e.target.id;
+    
+        for (let i = 0; i < recoveredArrTasks.length; i++) {
+            if (recoveredArrTasks[i].id === taskID) {
+                recoveredArrTasks[i].columnID = targetColumn.id;
+                arrTasks = recoveredArrTasks;
+                localStorage.setItem("tasksSave", JSON.stringify(arrTasks));
+                break;
+            }
+        }
+    });
 
     taskArea.addEventListener("dragover", (e) => {
         const dragging = document.querySelector(".dragging");
-        const applyAfter = getNewPosition(taskArea, e.clientY, task.columnID);
+        const applyAfter = getNewPosition(taskArea);
 
         if(applyAfter){
             applyAfter.insertAdjacentElement("afterend", dragging);
@@ -412,18 +447,8 @@ function buildTask(Tasks) {
     tasksDiv.appendChild(trashImg);
 }
 
-function getNewPosition(taskArea, posY, columnID){
+function getNewPosition(taskArea){
     const cards = taskArea.querySelectorAll(".item:not(.dragging");
-    let result;
-
-    for (let refer_card of cards) {
-        const box = refer_card.getBoundingClientRect();
-        const boxCenterY = box.y + box.height / 2;
-
-        if(posY >= boxCenterY) result = refer_card;
-    }
-
-    return result;
 }
 
 loadTask();
