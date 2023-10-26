@@ -95,13 +95,13 @@ function columnCreate() {
 
         columnArea.addEventListener("dragover", (e) => {
             const dragging = document.querySelector(".dragging");
-            taskArea.querySelectorAll(".item:not(.dragging");
-            columnArea.prepend(dragging);
+            taskArea.prepend(dragging);
         })
 
         taskButton.addEventListener("click", () => {
             let task = {
                 id: taskArea.id,
+                taskAreaID: taskArea.id,
                 columnID: columnArea.id,
                 title: tasksTitleInput.value,
                 text: tasksTextarea.value
@@ -149,7 +149,7 @@ function columnCreate() {
 
 
 function createTasks(task, id1, id2) {
-    const taskArea = document.getElementById(task.id);
+    const taskArea = document.getElementById(task.taskAreaID);
     const tasksDiv = document.createElement("div");
     const taskTitle = document.createElement("h2");
     const taskDescription = document.createElement("p");
@@ -169,7 +169,8 @@ function createTasks(task, id1, id2) {
     
     document.addEventListener("dragend", (e) => {
         e.target.classList.remove("dragging");
-        let targetColumn = e.target.parentElement;
+        let targetTaskArea = e.target.parentElement;
+        let targetColumn = targetTaskArea.parentElement;
         let savedTask = localStorage.getItem("tasksSave");
         let recoveredArrTasks = JSON.parse(savedTask);
         let taskID = e.target.id;
@@ -177,6 +178,7 @@ function createTasks(task, id1, id2) {
         for (let i = 0; i < recoveredArrTasks.length; i++) {
             if (recoveredArrTasks[i].id === taskID) {
                 recoveredArrTasks[i].columnID = targetColumn.id;
+                recoveredArrTasks[i].taskAreaID = targetTaskArea.id;
                 arrTasks = recoveredArrTasks;
                 localStorage.setItem("tasksSave", JSON.stringify(arrTasks));
                 break;
@@ -205,7 +207,7 @@ function createTasks(task, id1, id2) {
 
 function taskDelete(task) {
     for (let i = 0; i < arrTasks.length; i++) {
-        if (arrTasks[i].id == task.id) {
+        if (arrTasks[i].id == task.taskAreaID) {
             arrTasks.splice(i, 1);
             localStorage.removeItem("tasksSave");
             const json = JSON.stringify(arrTasks);
@@ -213,7 +215,7 @@ function taskDelete(task) {
         }
     }
 
-    let tasksDiv = document.getElementById(task.id).remove();
+    let tasksDiv = document.getElementById(task.taskAreaID).remove();
 }
 
 function saveTask(task) {
@@ -335,13 +337,13 @@ function buildColumn(columnId, recoveredArrTasks) {
 
     columnArea.addEventListener("dragover", (e) => {
         const dragging = document.querySelector(".dragging");
-        taskArea.querySelectorAll(".item:not(.dragging");
-        columnArea.prepend(dragging);
+        taskArea.prepend(dragging);
     })
 
     taskButton.addEventListener("click", () => {
         let task = {
             id: taskArea.id,
+            taskAreaID: taskArea.id,
             columnID: columnArea.id,
             title: tasksTitleInput.value,
             text: tasksTextarea.value
@@ -376,8 +378,7 @@ function buildColumn(columnId, recoveredArrTasks) {
     if (recoveredArrTasks != null) {
         for (let i = 0; i < recoveredArrTasks.length; i++) {
             if (recoveredArrTasks[i].columnID == columnId.id) {
-                let taskAreaId = recoveredArrTasks[i].id;
-                taskArea.id = recoveredArrTasks[i].id;
+                taskArea.id = recoveredArrTasks[i].taskAreaID;
                 buildTask(recoveredArrTasks[i])
             }
         }
@@ -385,14 +386,13 @@ function buildColumn(columnId, recoveredArrTasks) {
 }
 
 function buildTask(Tasks) {
-    const taskArea = document.getElementById(Tasks.id);
+    const taskArea = document.getElementById(Tasks.taskAreaID);
     const tasksDiv = document.createElement("div");
     const taskTitle = document.createElement("h2");
     const taskDescription = document.createElement("p");
     const trashImg = document.createElement("img")
 
     tasksDiv.id = Tasks.id;
-    Tasks.id = tasksDiv.id;
     taskTitle.innerText = Tasks.title;
     taskDescription.innerText = Tasks.text;
     trashImg.src = "./src/img/trash-icon.png";
@@ -411,7 +411,8 @@ function buildTask(Tasks) {
     
     document.addEventListener("dragend", (e) => {
         e.target.classList.remove("dragging");
-        let targetColumn = e.target.parentElement;
+        let targetTaskArea = e.target.parentElement;
+        let targetColumn = targetTaskArea.parentElement;
         let savedTask = localStorage.getItem("tasksSave");
         let recoveredArrTasks = JSON.parse(savedTask);
         let taskID = e.target.id;
