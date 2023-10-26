@@ -420,6 +420,7 @@ function buildTask(Tasks) {
         for (let i = 0; i < recoveredArrTasks.length; i++) {
             if (recoveredArrTasks[i].id === taskID) {
                 recoveredArrTasks[i].columnID = targetColumn.id;
+                recoveredArrTasks[i].taskAreaID = targetTaskArea.id;
                 arrTasks = recoveredArrTasks;
                 localStorage.setItem("tasksSave", JSON.stringify(arrTasks));
                 break;
